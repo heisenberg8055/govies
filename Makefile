@@ -53,3 +53,11 @@ run: ## runs the go binary. use additional options if required.
 	make build
 	chmod +x $(APP_EXECUTABLE)
 	$(APP_EXECUTABLE)
+
+## Docker compose
+docker-build:
+	docker compose build --no-cache
+
+docker-run:
+	make docker-build
+	docker compose up
