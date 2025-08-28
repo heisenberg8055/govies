@@ -1,0 +1,29 @@
+{{define "subject"}}Welcome to Govies!{{end}}
+
+{{define "plainBody"}} 
+Hi,
+
+Thanks {{.Name}} for signing up for a Govies account. We're excited to have you on board!
+
+If you have any questions, feel free to reach out to our support team.
+
+Best regards,
+The Govies Team 
+{{end}}
+
+{{define "htmlBody"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p>Hi,</p>
+    <p>Thanks {{.Name}} for signing up for a Govies account. We're excited to have you on board!</p>
+    <p>If you have any questions, feel free to reach out to our support team.</p>
+    <p>Best regards,</p>
+    <p>The Govies Team</p>
+  </body>
+</html>
+{{end}}

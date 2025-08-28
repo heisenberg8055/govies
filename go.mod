@@ -11,3 +11,8 @@ require (
 require golang.org/x/time v0.12.0
 
 require golang.org/x/crypto v0.41.0
+
+require (
+	github.com/wneessen/go-mail v0.6.2 // indirect
+	golang.org/x/text v0.28.0 // indirect
+)
