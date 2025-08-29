@@ -2,6 +2,7 @@ package mailer
 
 import (
 	"bytes"
+	"context"
 	"embed"
 	"time"
 
@@ -79,5 +80,7 @@ func (m *Mailer) Send(recipient string, templateFile string, data any) error {
 	msg.Subject(subject.String())
 	msg.SetBodyString(mail.TypeTextPlain, plainBody.String())
 	msg.AddAlternativeString(mail.TypeTextHTML, htmlBody.String())
-	return m.client.DialAndSend(msg)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	return m.client.DialAndSendWithContext(ctx, msg)
 }
