@@ -80,7 +80,7 @@ func (m *Mailer) Send(recipient string, templateFile string, data any) error {
 	msg.Subject(subject.String())
 	msg.SetBodyString(mail.TypeTextPlain, plainBody.String())
 	msg.AddAlternativeString(mail.TypeTextHTML, htmlBody.String())
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
 	return m.client.DialAndSendWithContext(ctx, msg)
 }
