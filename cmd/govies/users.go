@@ -80,7 +80,7 @@ func (app *application) activateUserHandler(w http.ResponseWriter, r *http.Reque
 		TokenPlainText string `json:"token"`
 	}
 
-	err := app.readJSON(w, r, input)
+	err := app.readJSON(w, r, &input)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -98,6 +98,7 @@ func (app *application) activateUserHandler(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
+			v.AddError("token", "invalid or expired activation token")
 			app.failedValidationResponse(w, r, v.Errors)
 		default:
 			app.serverErrorResponse(w, r, err)

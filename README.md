@@ -8,4 +8,4 @@ POSTGRES_PASSWORD=0414
 POSTGRES_HOST=localhost
 POSTGRES_DB=govies
 
-// Test token activation and mail token send // 312 pg
+page: 344
