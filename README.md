@@ -8,4 +8,4 @@ POSTGRES_PASSWORD=0414
 POSTGRES_HOST=localhost
 POSTGRES_DB=govies
 
-page: 344
+clean : fmt.Println(token.PlainText)
