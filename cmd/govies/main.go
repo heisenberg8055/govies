@@ -3,20 +3,24 @@ package main
 import (
 	"context"
 	"database/sql"
+	"expvar"
 	"flag"
+	"fmt"
 	"log/slog"
 	"os"
+	"runtime"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/heisenberg8055/govies/internal/data"
 	"github.com/heisenberg8055/govies/internal/mailer"
+	"github.com/heisenberg8055/govies/internal/vcs"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-const version = "1.0.0"
+var version = vcs.Version()
 
 type config struct {
 	port int
@@ -89,7 +93,14 @@ func main() {
 		return nil
 	})
 
+	displayVersion := flag.Bool("version", false, "Displays version flag")
+
 	flag.Parse()
+
+	if *displayVersion {
+		fmt.Printf("Version:\t%s\n", version)
+		return
+	}
 
 	db, err := openDB(cfg)
 	if err != nil {
@@ -110,6 +121,19 @@ func main() {
 		models: data.NewModels(db),
 		mailer: mailer,
 	}
+	expvar.NewString("version").Set(version)
+
+	expvar.Publish("goroutines", expvar.Func(func() any {
+		return runtime.NumGoroutine()
+	}))
+
+	expvar.Publish("database", expvar.Func(func() any {
+		return db.Stats()
+	}))
+
+	expvar.Publish("timestamp", expvar.Func(func() any {
+		return time.Now().Unix()
+	}))
 	err = app.serve()
 	if err != nil {
 		logger.Error(err.Error())

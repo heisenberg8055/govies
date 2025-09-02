@@ -18,23 +18,27 @@ CYAN   := $(shell tput -Txterm setaf 6)
 RESET  := $(shell tput -Txterm sgr0)
 
 ## Quality
-check-quality: ## runs code quality checks
-	make lint
+audit: ## runs code quality checks
 	make fmt
 	make vet
-
-# Append || true below if blocking local developement
-lint: ## go linting. Update and use specific lint tool and options
-	golangci-lint run --enable-all
-
+	make static-check
+	make govulncheck
 vet: ## go vet
 	go vet ./...
 
 fmt: ## runs go formatter
 	go fmt ./...
 
+static-check:
+	go tool staticcheck ./...
+
+govulncheck:
+	go tool govulncheck
+
 tidy: ## runs tidy to fix go.mod dependencies
 	go mod tidy
+	go mod verify
+	go mod vendor
 
 ## Test
 test: ## runs tests and create generates coverage report
