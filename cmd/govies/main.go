@@ -16,7 +16,7 @@ import (
 	"github.com/heisenberg8055/govies/internal/data"
 	"github.com/heisenberg8055/govies/internal/mailer"
 	"github.com/heisenberg8055/govies/internal/vcs"
-	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/lib/pq"
 )
 
@@ -59,12 +59,6 @@ type application struct {
 func main() {
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-
-	err := godotenv.Load()
-	if err != nil {
-		logger.Error("Failed to load variables", "error", err.Error())
-		return
-	}
 
 	var cfg config
 
