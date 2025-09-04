@@ -38,7 +38,7 @@ Govies is a RESTful API for managing movie data, user authentication, and permis
 - **CORS Support**: Enable cross-origin requests for trusted origins.
 - **Health Check**: Monitor the API's availability.
 - **Metrics**: Track API performance and usage statistics.
-
+- **API**: Supports partial query filtering, sorting and pagination  
 ---
 
 ## 🛠️ Tech Stack
